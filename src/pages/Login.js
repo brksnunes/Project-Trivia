@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import getToken from '../services/api';
 
@@ -79,10 +78,6 @@ class Login extends React.Component {
     );
   }
 }
-
-Login.propTypes = {
-  history: PropTypes.string.isRequired,
-};
 
 export default Login;
 
