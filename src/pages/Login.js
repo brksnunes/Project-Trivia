@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
+import getToken from '../services/api';
 
 class Login extends React.Component {
   constructor() {
@@ -9,6 +11,7 @@ class Login extends React.Component {
       name: '',
       email: '',
       btnDisabled: true,
+      token: '',
     };
   }
 
@@ -22,13 +25,22 @@ class Login extends React.Component {
     });
   };
 
-  buttonHandler = () => {
+  buttonHandler = async () => {
     const { history } = this.props;
+    const token = await getToken();
+    this.setState({ token });
+    localStorage.setItem('token', token);
     history.push('/game');
   };
 
+  settingsButtonHandler = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  };
+
   render() {
-    const { name, email, btnDisabled } = this.state;
+    const { name, email, btnDisabled, token } = this.state;
+    console.log(token);
     return (
       <form>
         <img src={ logo } className="App-logo" alt="logo" />
@@ -54,7 +66,14 @@ class Login extends React.Component {
           onClick={ this.buttonHandler }
           disabled={ btnDisabled }
         >
-          Entrar
+          Play
+        </button>
+        <button
+          data-testid="btn-settings"
+          type="button"
+          onClick={ this.settingsButtonHandler }
+        >
+          Configurações
         </button>
       </form>
     );
@@ -63,6 +82,12 @@ class Login extends React.Component {
 
 Login.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+};
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Login;
