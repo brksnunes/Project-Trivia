@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -23,6 +24,11 @@ class Login extends React.Component {
 
   buttonHandler = () => {
 
+  };
+
+  settingsButtonHandler = () => {
+    const { history } = this.props;
+    history.push('/settings');
   };
 
   render() {
@@ -54,9 +60,22 @@ class Login extends React.Component {
         >
           Entrar
         </button>
+        <button
+          data-testid="btn-settings"
+          type="button"
+          onClick={ this.settingsButtonHandler }
+        >
+          Configurações
+        </button>
       </form>
     );
   }
 }
 
 export default Login;
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
