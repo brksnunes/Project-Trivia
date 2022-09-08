@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import logo from '../trivia.png';
+import getToken from '../services/api';
 
 class Login extends React.Component {
   constructor() {
@@ -8,6 +10,7 @@ class Login extends React.Component {
       name: '',
       email: '',
       btnDisabled: true,
+      token: '',
     };
   }
 
@@ -21,12 +24,17 @@ class Login extends React.Component {
     });
   };
 
-  buttonHandler = () => {
-
+  buttonHandler = async () => {
+    const { history } = this.props;
+    const token = await getToken();
+    this.setState({ token });
+    localStorage.setItem('token', token);
+    history.push('/game');
   };
 
   render() {
-    const { name, email, btnDisabled } = this.state;
+    const { name, email, btnDisabled, token } = this.state;
+    console.log(token);
     return (
       <form>
         <img src={ logo } className="App-logo" alt="logo" />
@@ -52,11 +60,15 @@ class Login extends React.Component {
           onClick={ this.buttonHandler }
           disabled={ btnDisabled }
         >
-          Entrar
+          Play
         </button>
       </form>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.string.isRequired,
+};
 
 export default Login;

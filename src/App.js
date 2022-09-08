@@ -9,7 +9,7 @@ export default function App() {
       <Route
         exact
         path="/"
-        component={ Login }
+        render={ (props) => (<Login { ...props } />) }
       />
     </Switch>
   );
