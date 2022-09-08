@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 
 class Login extends React.Component {
@@ -22,7 +23,8 @@ class Login extends React.Component {
   };
 
   buttonHandler = () => {
-
+    const { history } = this.props;
+    history.push('/game');
   };
 
   render() {
@@ -58,5 +60,9 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+};
 
 export default Login;
