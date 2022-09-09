@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import getToken from '../services/api';
+import { fetchQuestionsAPI } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -25,10 +27,11 @@ class Login extends React.Component {
   };
 
   buttonHandler = async () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
     const token = await getToken();
     this.setState({ token });
     localStorage.setItem('token', token);
+    await dispatch(fetchQuestionsAPI(token));
     history.push('/game');
   };
 
@@ -80,13 +83,10 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-};
-
-Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default Login;
+export default connect()(Login);
