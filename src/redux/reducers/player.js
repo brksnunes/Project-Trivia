@@ -10,7 +10,9 @@ const INITIAL_STATE = {
 
 export default function player(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case (NEW_PLAYER): return action.payload;
-  default: return state;
+  case NEW_PLAYER:
+    return { ...state, name: action.payload.name, gravatarEmail: action.payload.email };
+  default:
+    return state;
   }
 }

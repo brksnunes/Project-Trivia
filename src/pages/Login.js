@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import logo from '../trivia.png';
 import getToken from '../services/api';
-import { fetchQuestionsAPI } from '../redux/actions';
+import { addPlayer, fetchQuestionsAPI } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -27,11 +27,14 @@ class Login extends React.Component {
   };
 
   buttonHandler = async () => {
-    const { history, dispatch } = this.props;
+    const { history, addUser, fetchQuestions } = this.props;
+    const { name, email } = this.state;
+    const user = { name, email };
+    addUser(user);
     const token = await getToken();
     this.setState({ token });
     localStorage.setItem('token', token);
-    await dispatch(fetchQuestionsAPI(token));
+    fetchQuestions(token);
     history.push('/game');
   };
 
@@ -82,11 +85,17 @@ class Login extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addUser: (state) => dispatch(addPlayer(state)),
+  fetchQuestions: (state) => dispatch(fetchQuestionsAPI(state)),
+});
+
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  addUser: PropTypes.func.isRequired,
+  fetchQuestions: PropTypes.func.isRequired,
 };
 
-export default connect()(Login);
+export default connect(null, mapDispatchToProps)(Login);
