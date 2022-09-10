@@ -104,6 +104,14 @@ class Game extends React.Component {
             <div data-testid="answer-options">{ answersButtons }</div>
           </div>
         )}
+        { isClicked
+        && (
+          <button
+            type="button"
+            data-testid="btn-next"
+          >
+            Next
+          </button>)}
       </div>
     );
   }
