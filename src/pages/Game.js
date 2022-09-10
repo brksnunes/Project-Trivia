@@ -6,6 +6,7 @@ import Header from '../components/Header';
 class Game extends React.Component {
   state = {
     currentQuestion: 0,
+    isClicked: false,
   };
 
   componentDidMount() {
@@ -42,9 +43,13 @@ class Game extends React.Component {
     return array.sort(() => Math.random() - number);
   };
 
+  onClick = () => {
+    this.setState({ isClicked: true });
+  };
+
   render() {
     const { game: { questions } } = this.props;
-    const { currentQuestion } = this.state;
+    const { currentQuestion, isClicked } = this.state;
     let answersButtons;
     if (questions[currentQuestion]) {
       const answers = [...questions[currentQuestion].incorrect_answers,
@@ -54,6 +59,10 @@ class Game extends React.Component {
         if (answer === questions[currentQuestion].correct_answer) {
           button = (
             <button
+              style={ {
+                border: isClicked ? '3px solid rgb(6, 240, 15)' : '',
+              } }
+              onClick={ this.onClick }
               type="button"
               data-testid="correct-answer"
               key={ index }
@@ -65,6 +74,10 @@ class Game extends React.Component {
           const key = questions[currentQuestion].incorrect_answers.indexOf(answer);
           button = (
             <button
+              style={ {
+                border: isClicked ? '3px solid red' : '',
+              } }
+              onClick={ this.onClick }
               type="button"
               data-testid={ `wrong-answer-${key}` }
               key={ index }
