@@ -3,58 +3,66 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
+const ONE_SECOND = 1000;
 class Game extends React.Component {
   state = {
     currentQuestion: 0,
     isClicked: false,
+    questions: [],
+    counter: 30,
+    aux: true,
   };
 
   componentDidMount() {
-    const { history } = this.props;
-    const { game } = this.props;
+    const { history, game } = this.props;
     const { response_code: responseCode } = game;
-    console.log(responseCode, '*');
     if (responseCode !== 0) {
-      console.log(responseCode);
       localStorage.removeItem('token');
       history.push('/');
     }
+    this.setState({
+      questions: this.gerarNovoArray(),
+    });
+    this.timeCounter();
   }
-  // algoritmo de embaralhamento de Fisher-Yates
-  // https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%c3%b3ria/406059#406059
 
-  // embaralharArray = (array) => {
-  //   if (array.length === 2) {
-  //     const temp = array[0];
-  //     array[0] = array[1];
-  //     array[1] = temp;
-  //   }
-  //   for (let index = array.length - 1; index >= 1; index -= 1) {
-  //     const j = Math.floor(Math.random() * index);
-  //     const temp = array[index];
-  //     array[index] = array[j];
-  //     array[j] = temp;
-  //   }
-  //   return array;
-  // };
+  componentDidUpdate() {
+    const { counter, aux } = this.state;
+    if (counter === 0 && aux === true) {
+      this.onClick();
+    }
+  }
+
+  timeCounter = () => {
+    this.intervalID = setInterval(() => {
+      this.setState((prevState) => ({ counter: prevState.counter - 1 }));
+    }, ONE_SECOND);
+  };
 
   embaralharArray = (array) => {
     const number = 0.5;
     return array.sort(() => Math.random() - number);
   };
 
+  gerarNovoArray = () => {
+    const { game: { questions } } = this.props;
+    return questions.map((question) => ({
+      ...question,
+      answers: this.embaralharArray([...question.incorrect_answers,
+        question.correct_answer]) }));
+  };
+
   onClick = () => {
-    this.setState({ isClicked: true });
+    this.setState({ isClicked: true, aux: false });
+    clearInterval(this.intervalID);
   };
 
   render() {
-    const { game: { questions } } = this.props;
-    const { currentQuestion, isClicked } = this.state;
+    const { currentQuestion, isClicked, questions, counter } = this.state;
     let answersButtons;
+
     if (questions[currentQuestion]) {
-      const answers = [...questions[currentQuestion].incorrect_answers,
-        questions[currentQuestion].correct_answer];
-      answersButtons = this.embaralharArray(answers).map((answer, index) => {
+      answersButtons = questions[currentQuestion].answers.map((answer, index) => {
         let button;
         if (answer === questions[currentQuestion].correct_answer) {
           button = (
@@ -66,6 +74,7 @@ class Game extends React.Component {
               type="button"
               data-testid="correct-answer"
               key={ index }
+              disabled={ isClicked }
             >
               {answer}
 
@@ -81,6 +90,7 @@ class Game extends React.Component {
               type="button"
               data-testid={ `wrong-answer-${key}` }
               key={ index }
+              disabled={ isClicked }
             >
               {answer}
             </button>
@@ -95,6 +105,7 @@ class Game extends React.Component {
         <h2>Game</h2>
         { questions[currentQuestion] && (
           <div>
+            <p>{ counter }</p>
             <p data-testid="question-category">
               { questions[currentQuestion].category }
             </p>
