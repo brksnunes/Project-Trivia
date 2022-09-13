@@ -1,7 +1,11 @@
-import { questionsResponse } from "../../../cypress/mocks/questions";
+import { questionsResponse, invalidTokenQuestionsResponse } from "../../../cypress/mocks/questions";
 
 const mockFetch = () => Promise.resolve({
   json: () => Promise.resolve(questionsResponse),
 });
 
-export default mockFetch;
+const mockFetchInvalidToken = () => Promise.resolve({
+  json: () => Promise.resolve(invalidTokenQuestionsResponse),
+});
+
+export { mockFetch, mockFetchInvalidToken};

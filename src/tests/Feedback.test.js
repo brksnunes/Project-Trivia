@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
-import mockFetch from './helpers/mockFetch';
+import { mockFetch } from './helpers/mockFetch';
 import { questionsResponse } from '../../cypress/mocks/questions';
 
 const NAME = 'xablau júnior';
