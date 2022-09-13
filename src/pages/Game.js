@@ -92,9 +92,20 @@ class Game extends React.Component {
     //   this.setState({ currentQuestion: currentQuestion + 1 });
     //   this.timeCounter();
     const { currentQuestion } = this.state;
-    const { history } = this.props;
+    const { history, player } = this.props;
     const maxNum = 4;
-    if (currentQuestion === maxNum) history.push('/feedback');
+    if (currentQuestion === maxNum) {
+      if (localStorage.getItem('results')) {
+        const list = JSON.parse(localStorage.getItem('results'));
+        list.push(player);
+        localStorage.setItem('results', JSON.stringify(list));
+      } else {
+        const list = [];
+        list.push(player);
+        localStorage.setItem('results', JSON.stringify(list));
+      }
+      history.push('/feedback');
+    }
 
     this.setState((prevState) => ({
       counter: 30,
@@ -187,10 +198,12 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   addScore: PropTypes.func.isRequired,
+  player: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = (state) => ({
   game: state.game,
+  player: state.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
