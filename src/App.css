@@ -7,7 +7,7 @@
 
   --config-button-bg-color: #00d5e2;
 
-  --button-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow: 4px 4px rgba(0, 0, 0, 0.25);
 
 }
 
@@ -94,7 +94,7 @@ header > img {
   background: var(--button-bg-color);
   border: none;
   border-radius: 5px;
-  box-shadow: var(--button-shadow);
+  box-shadow: var(--shadow);
   color: white;
   display: block;
   font-size: 16px;
@@ -133,7 +133,7 @@ header > img {
 .category-container {
   background: #f9ba18;
   border-radius: 100px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
   padding: 0 30px;
   position: relative;
   top: -45px;
@@ -187,7 +187,7 @@ header > img {
   background: #2fc18c;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
   height: 45px;
   position: relative;
   width: 519px;
@@ -237,7 +237,6 @@ header > img {
 
 .player-picture {
   border-radius: 104.412px;
-  filter: drop-shadow(0px 0px 9px black);
   height: 213px;
   position: relative;
   top: -70px;
@@ -254,7 +253,7 @@ header > img {
   background: #00d5e2;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
   color: white;
   font-size: 16px;
   font-style: normal;
@@ -269,7 +268,7 @@ header > img {
   background: #2fc18c;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
   color: white;
   font-size: 16px;
   font-style: normal;
@@ -306,7 +305,7 @@ header > img {
   background: #2fc18c;
   border: none;
   border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
   color: white;
   font-size: 16px;
   font-style: normal;
@@ -351,7 +350,7 @@ header > img {
   align-items: center;
   background: white;
   border-radius: 100px;
-  box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 22px rgba(0, 0, 0, 0.25);
   display: flex;
   gap: 10px;
   height: 45px;
