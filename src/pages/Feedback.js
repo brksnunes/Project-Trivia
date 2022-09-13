@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { restart } from '../redux/actions';
-import logo from '../assets/login_logo.png';
-// import Header from '../components/Header';
+import Header from '../components/Header';
 
 class Feedback extends React.Component {
   newGame = () => {
@@ -28,8 +27,7 @@ class Feedback extends React.Component {
     const MINIMUM_SCORE = 2;
     return (
       <div>
-        {/* <Header /> */}
-        <img src={ logo } className="feedback-logo" alt="logo" />
+        <Header />
         <div className="feedback-container">
           <img
             src={ `https://www.gravatar.com/avatar/${converted}` }
@@ -42,16 +40,18 @@ class Feedback extends React.Component {
           && <h1 data-testid="feedback-text">Could be better...</h1> }
             { question > MINIMUM_SCORE
           && <h1 data-testid="feedback-text">Well Done!</h1> }
-            <p
-              data-testid="feedback-total-question"
-            >
-              {`Você acertou ${question} questões!`}
-            </p>
-            <p
-              data-testid="feedback-total-score"
-            >
-              {`Um total de ${total} pontos`}
-            </p>
+            <span>Você acertou </span>
+            <span data-testid="feedback-total-question">
+              {question}
+            </span>
+            <span> questões!</span>
+            <br />
+            <br />
+            <span>Um total de </span>
+            <span data-testid="feedback-total-score">
+              {total}
+            </span>
+            <span> pontos</span>
           </div>
 
         </div>

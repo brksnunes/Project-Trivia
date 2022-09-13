@@ -23,7 +23,8 @@ class Header extends React.Component {
         </div>
         <div className="header-score">
           <img src={ star } alt="logo" />
-          <p data-testid="header-score">{`Pontos: ${score}`}</p>
+          <span>Pontos: </span>
+          <span data-testid="header-score">{score}</span>
         </div>
       </header>
     );
