@@ -9,15 +9,17 @@ class Header extends React.Component {
     const { name, gravatarEmail, score } = info;
     const converted = md5(gravatarEmail).toString();
     return (
-      <div>
-        <img
-          src={ `https://www.gravatar.com/avatar/${converted}` }
-          alt={ gravatarEmail }
-          data-testid="header-profile-picture"
-        />
-        <p data-testid="header-player-name">{ name }</p>
+      <header>
+        <div className="header-user">
+          <img
+            src={ `https://www.gravatar.com/avatar/${converted}` }
+            alt={ gravatarEmail }
+            data-testid="header-profile-picture"
+          />
+          <p data-testid="header-player-name">{ name }</p>
+        </div>
         <p data-testid="header-score">{score}</p>
-      </div>
+      </header>
     );
   }
 }

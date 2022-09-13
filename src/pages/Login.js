@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import logo from '../trivia.png';
+import logo from '../assets/login_logo.png';
+import trybeLogo from '../assets/trybe.png';
 import getToken from '../services/api';
 import { addPlayer, fetchQuestionsAPI } from '../redux/actions';
 
@@ -47,40 +48,47 @@ class Login extends React.Component {
     const { name, email, btnDisabled, token } = this.state;
     console.log(token);
     return (
-      <form>
+      <div className="login-container">
         <img src={ logo } className="App-logo" alt="logo" />
-        <input
-          onChange={ this.inputHandler }
-          name="name"
-          type="text"
-          data-testid="input-player-name"
-          placeholder="Insira seu nome"
-          value={ name }
-        />
-        <input
-          onChange={ this.inputHandler }
-          type="email"
-          name="email"
-          data-testid="input-gravatar-email"
-          placeholder="Insira seu e-mail"
-          value={ email }
-        />
-        <button
-          data-testid="btn-play"
-          type="button"
-          onClick={ this.buttonHandler }
-          disabled={ btnDisabled }
-        >
-          Play
-        </button>
-        <button
-          data-testid="btn-settings"
-          type="button"
-          onClick={ this.settingsButtonHandler }
-        >
-          Configurações
-        </button>
-      </form>
+        <div className="form-container">
+          <form>
+            <input
+              onChange={ this.inputHandler }
+              className="form-input"
+              type="email"
+              name="email"
+              data-testid="input-gravatar-email"
+              placeholder="Qual é o seu e-mail do gravatar?"
+              value={ email }
+            />
+            <input
+              onChange={ this.inputHandler }
+              className="form-input"
+              name="name"
+              type="text"
+              data-testid="input-player-name"
+              placeholder="Qual é o seu nome?"
+              value={ name }
+            />
+            <button
+              data-testid="btn-play"
+              type="button"
+              onClick={ this.buttonHandler }
+              disabled={ btnDisabled }
+            >
+              JOGAR
+            </button>
+            <button
+              data-testid="btn-settings"
+              type="button"
+              onClick={ this.settingsButtonHandler }
+            >
+              CONFIGURAÇÕES
+            </button>
+          </form>
+        </div>
+        <img src={ trybeLogo } className="App-logo" alt="logo" />
+      </div>
     );
   }
 }
