@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+import star from '../assets/star.png';
 
 class Header extends React.Component {
   render() {
@@ -18,7 +19,10 @@ class Header extends React.Component {
           />
           <p data-testid="header-player-name">{ name }</p>
         </div>
-        <p data-testid="header-score">{score}</p>
+        <div className="header-score">
+          <img src={ star } alt="logo" />
+          <p data-testid="header-score">{`Pontos: ${score}`}</p>
+        </div>
       </header>
     );
   }
