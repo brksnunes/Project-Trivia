@@ -3,13 +3,19 @@ import { getQuestionsAPI } from '../../services/api';
 export const NEW_PLAYER = 'NEW_PLAYER';
 export const ADD_QUESTIONS = 'ADD_QUESTIONS';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const SUM_SCORE = 'SUM_SCORE';
 
 export function addPlayer(payload) {
   return {
-    type: 'NEW_PLAYER',
+    type: NEW_PLAYER,
     payload,
   };
 }
+
+export const sumScore = (payload) => ({
+  type: SUM_SCORE,
+  payload,
+});
 
 export const addQuestions = (payload) => ({
   type: ADD_QUESTIONS,

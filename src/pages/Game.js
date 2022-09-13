@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { sumScore } from '../redux/actions';
 
 const ONE_SECOND = 1000;
 class Game extends React.Component {
@@ -52,9 +53,36 @@ class Game extends React.Component {
         question.correct_answer]) }));
   };
 
-  onClick = () => {
-    this.setState({ isClicked: true, aux: false });
+  onClick = (event) => {
+    const { game: { questions }, addScore } = this.props;
+    this.setState({ isClicked: true, aux: false }, () => {
+      if (event !== undefined) {
+        const { target } = event;
+        const { name } = target;
+        if (name === 'correct') {
+          const { counter, currentQuestion } = this.state;
+          const difficult = questions[currentQuestion].difficulty;
+          const number1 = 1;
+          const number2 = 2;
+          const number3 = 3;
+          const number10 = 10;
+          const easy = difficult === 'easy' ? number1 : 0;
+          const medium = difficult === 'medium' ? number2 : 0;
+          const hard = difficult === 'hard' ? number3 : 0;
+          const score = number10 + (counter * (easy + medium + hard));
+          addScore(score);
+        }
+      }
+    });
     clearInterval(this.intervalID);
+  };
+
+  nextQuestion = () => {
+    this.setState({ counter: 30, isClicked: false, aux: true }, () => {
+      const { currentQuestion } = this.state;
+      this.setState({ currentQuestion: currentQuestion + 1 });
+      this.timeCounter();
+    });
   };
 
   render() {
@@ -71,6 +99,7 @@ class Game extends React.Component {
                 border: isClicked ? '3px solid rgb(6, 240, 15)' : '',
               } }
               onClick={ this.onClick }
+              name="correct"
               type="button"
               data-testid="correct-answer"
               key={ index }
@@ -87,6 +116,7 @@ class Game extends React.Component {
                 border: isClicked ? '3px solid red' : '',
               } }
               onClick={ this.onClick }
+              name="incorrect"
               type="button"
               data-testid={ `wrong-answer-${key}` }
               key={ index }
@@ -120,6 +150,7 @@ class Game extends React.Component {
           <button
             type="button"
             data-testid="btn-next"
+            onClick={ this.nextQuestion }
           >
             Next
           </button>)}
@@ -133,10 +164,15 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  addScore: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   game: state.game,
 });
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  addScore: (state) => dispatch(sumScore(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
