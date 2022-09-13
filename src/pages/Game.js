@@ -78,11 +78,28 @@ class Game extends React.Component {
   };
 
   nextQuestion = () => {
-    this.setState({ counter: 30, isClicked: false, aux: true }, () => {
-      const { currentQuestion } = this.state;
-      this.setState({ currentQuestion: currentQuestion + 1 });
-      this.timeCounter();
-    });
+    // this.setState({ counter: 30, isClicked: false, aux: true }, () => {
+    //   const { currentQuestion } = this.state;
+    //   const MAX_QUESTION = 4;
+    //   // while (currentQuestion < MAX_QUESTION) {
+    //   //   this.setState({ currentQuestion: currentQuestion + 1 });
+    //   // }
+    //   this.setState({ currentQuestion: currentQuestion + 1 });
+    //   this.timeCounter();
+    const { currentQuestion } = this.state;
+    const { history } = this.props;
+    const maxNum = 4;
+    if (currentQuestion === maxNum) history.push('/feedback');
+
+    this.setState((prevState) => ({
+      counter: 30,
+      aux: true,
+      isClicked: false,
+      currentQuestion: prevState.currentQuestion < maxNum
+        ? prevState.currentQuestion + 1
+        : null,
+    }));
+    this.timeCounter();
   };
 
   render() {
