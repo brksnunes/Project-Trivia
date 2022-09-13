@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { sumScore } from '../redux/actions';
+import timer from '../assets/timer.png';
 
 const ONE_SECOND = 1000;
 class Game extends React.Component {
@@ -83,14 +84,6 @@ class Game extends React.Component {
   };
 
   nextQuestion = () => {
-    // this.setState({ counter: 30, isClicked: false, aux: true }, () => {
-    //   const { currentQuestion } = this.state;
-    //   const MAX_QUESTION = 4;
-    //   // while (currentQuestion < MAX_QUESTION) {
-    //   //   this.setState({ currentQuestion: currentQuestion + 1 });
-    //   // }
-    //   this.setState({ currentQuestion: currentQuestion + 1 });
-    //   this.timeCounter();
     const { currentQuestion } = this.state;
     const { history, player } = this.props;
     const maxNum = 4;
@@ -132,6 +125,7 @@ class Game extends React.Component {
                 border: isClicked ? '3px solid rgb(6, 240, 15)' : '',
               } }
               onClick={ this.onClick }
+              className="alternative-button"
               name="correct"
               type="button"
               data-testid="correct-answer"
@@ -149,6 +143,7 @@ class Game extends React.Component {
                 border: isClicked ? '3px solid red' : '',
               } }
               onClick={ this.onClick }
+              className="alternative-button"
               name="incorrect"
               type="button"
               data-testid={ `wrong-answer-${key}` }
@@ -165,28 +160,40 @@ class Game extends React.Component {
     return (
       <div>
         <Header />
-        <h2>Game</h2>
         { questions[currentQuestion] && (
-          <div>
-            <p>{ counter }</p>
-            <p data-testid="question-category">
-              { questions[currentQuestion].category }
-            </p>
-            <p data-testid="question-text">
-              { questions[currentQuestion].question }
-            </p>
-            <div data-testid="answer-options">{ answersButtons }</div>
-          </div>
+          <>
+            <div className="question-section-container">
+              <div className="question-container">
+                <div className="category-container">
+                  <p data-testid="question-category">
+                    {questions[currentQuestion].category}
+                  </p>
+                </div>
+                <p data-testid="question-text">
+                  {questions[currentQuestion].question}
+                </p>
+                <div className="timer-container">
+                  <img src={ timer } alt="timer" />
+                  <p>{`Tempo: ${counter}`}</p>
+                </div>
+              </div>
+              <div data-testid="answer-options" className="buttons-container">
+                {answersButtons}
+                {isClicked && (
+                  <button
+                    type="button"
+                    data-testid="btn-next"
+                    onClick={ this.nextQuestion }
+                    className="next-button"
+                  >
+                    Next
+                  </button>)}
+              </div>
+            </div>
+            <footer className="footer-container" />
+
+          </>
         )}
-        { isClicked
-        && (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ this.nextQuestion }
-          >
-            Next
-          </button>)}
       </div>
     );
   }
