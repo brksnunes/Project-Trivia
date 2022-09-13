@@ -6,7 +6,7 @@ import md5 from 'crypto-js/md5';
 class Header extends React.Component {
   render() {
     const { info } = this.props;
-    const { name, gravatarEmail } = info;
+    const { name, gravatarEmail, score } = info;
     const converted = md5(gravatarEmail).toString();
     return (
       <div>
@@ -16,7 +16,7 @@ class Header extends React.Component {
           data-testid="header-profile-picture"
         />
         <p data-testid="header-player-name">{ name }</p>
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">{score}</p>
       </div>
     );
   }

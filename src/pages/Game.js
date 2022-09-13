@@ -12,6 +12,7 @@ class Game extends React.Component {
     questions: [],
     counter: 30,
     aux: true,
+    assertions: 0,
   };
 
   componentDidMount() {
@@ -60,6 +61,9 @@ class Game extends React.Component {
         const { target } = event;
         const { name } = target;
         if (name === 'correct') {
+          this.setState((prev) => ({
+            assertions: prev.assertions + 1,
+          }));
           const { counter, currentQuestion } = this.state;
           const difficult = questions[currentQuestion].difficulty;
           const number1 = 1;
@@ -70,7 +74,8 @@ class Game extends React.Component {
           const medium = difficult === 'medium' ? number2 : 0;
           const hard = difficult === 'hard' ? number3 : 0;
           const score = number10 + (counter * (easy + medium + hard));
-          addScore(score);
+          const { assertions } = this.state;
+          addScore([score, (assertions + 1)]);
         }
       }
     });
