@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import star from '../assets/star.png';
+import logo from '../assets/login_logo.png';
 
 class Header extends React.Component {
   render() {
@@ -11,6 +12,7 @@ class Header extends React.Component {
     const converted = md5(gravatarEmail).toString();
     return (
       <header>
+        <img src={ logo } alt="logo" />
         <div className="header-user">
           <img
             src={ `https://www.gravatar.com/avatar/${converted}` }

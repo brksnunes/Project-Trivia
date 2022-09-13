@@ -29,6 +29,12 @@ header {
   justify-content: center;
 }
 
+header > img {
+  left: -200px;
+  position: relative;
+  top: 90px;
+}
+
 .header-user {
   align-items: center;
   color: black;
@@ -38,7 +44,6 @@ header {
   font-weight: 400;
   gap: 10px;
   line-height: 150%;
-  margin-left: 590px;
 }
 
 .header-score {
