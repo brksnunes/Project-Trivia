@@ -53,22 +53,25 @@ class Game extends React.Component {
         question.correct_answer]) }));
   };
 
-  onClick = ({ target }) => {
+  onClick = (event) => {
     const { game: { questions }, addScore } = this.props;
-    const { name } = target;
     this.setState({ isClicked: true, aux: false }, () => {
-      if (name === 'correct') {
-        const { counter, currentQuestion } = this.state;
-        const difficult = questions[currentQuestion].difficulty;
-        const number1 = 1;
-        const number2 = 2;
-        const number3 = 3;
-        const number10 = 10;
-        const easy = difficult === 'easy' ? number1 : 0;
-        const medium = difficult === 'medium' ? number2 : 0;
-        const hard = difficult === 'hard' ? number3 : 0;
-        const score = number10 + (counter * (easy + medium + hard));
-        addScore(score);
+      if (event !== undefined) {
+        const { target } = event;
+        const { name } = target;
+        if (name === 'correct') {
+          const { counter, currentQuestion } = this.state;
+          const difficult = questions[currentQuestion].difficulty;
+          const number1 = 1;
+          const number2 = 2;
+          const number3 = 3;
+          const number10 = 10;
+          const easy = difficult === 'easy' ? number1 : 0;
+          const medium = difficult === 'medium' ? number2 : 0;
+          const hard = difficult === 'hard' ? number3 : 0;
+          const score = number10 + (counter * (easy + medium + hard));
+          addScore(score);
+        }
       }
     });
     clearInterval(this.intervalID);
