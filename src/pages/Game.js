@@ -161,38 +161,34 @@ class Game extends React.Component {
       <div>
         <Header />
         { questions[currentQuestion] && (
-          <>
-            <div className="question-section-container">
-              <div className="question-container">
-                <div className="category-container">
-                  <p data-testid="question-category">
-                    {questions[currentQuestion].category}
-                  </p>
-                </div>
-                <p data-testid="question-text">
-                  {questions[currentQuestion].question}
+          <div className="question-section-container">
+            <div className="question-container">
+              <div className="category-container">
+                <p data-testid="question-category">
+                  {questions[currentQuestion].category}
                 </p>
-                <div className="timer-container">
-                  <img src={ timer } alt="timer" />
-                  <p>{`Tempo: ${counter}`}</p>
-                </div>
               </div>
-              <div data-testid="answer-options" className="buttons-container">
-                {answersButtons}
-                {isClicked && (
-                  <button
-                    type="button"
-                    data-testid="btn-next"
-                    onClick={ this.nextQuestion }
-                    className="next-button"
-                  >
-                    Next
-                  </button>)}
+              <p data-testid="question-text">
+                {questions[currentQuestion].question}
+              </p>
+              <div className="timer-container">
+                <img src={ timer } alt="timer" />
+                <p>{`Tempo: ${counter}`}</p>
               </div>
             </div>
-            <footer className="footer-container" />
-
-          </>
+            <div data-testid="answer-options" className="buttons-container">
+              {answersButtons}
+              {isClicked && (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={ this.nextQuestion }
+                  className="next-button"
+                >
+                  Next
+                </button>)}
+            </div>
+          </div>
         )}
       </div>
     );

@@ -170,6 +170,7 @@ header > img {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: center;
 }
 
 .alternative-button {
@@ -178,15 +179,6 @@ header > img {
   border-radius: 100px;
   height: 64px;
   width: 519px;
-}
-
-.footer-container {
-  background: #3c1b7a;
-  height: 220px;
-  left: 0px;
-  position: relative;
-  top: -250px;
-  z-index: -1;
 }
 
 .next-button {
