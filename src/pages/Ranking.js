@@ -22,7 +22,7 @@ class Ranking extends React.Component {
 
   render() {
     const { results } = this.state;
-        return (
+    return (
       <>
         <img src={ logo } className="ranking-logo" alt="logo" />
         <div className="ranking-container">
