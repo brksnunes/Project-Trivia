@@ -22,8 +22,6 @@ class Feedback extends React.Component {
     const { total, question, info } = this.props;
     const { gravatarEmail } = info;
     const converted = md5(gravatarEmail).toString();
-    // const total = 0; // variável para receber pontuação total
-    // const question = 0; // variável para receber total de perguntas certas
     const MINIMUM_SCORE = 2;
     return (
       <div>

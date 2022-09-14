@@ -5,16 +5,18 @@ import Header from '../components/Header';
 import { sumScore } from '../redux/actions';
 import timer from '../assets/timer.png';
 
-const ONE_SECOND = 1000;
 class Game extends React.Component {
-  state = {
-    currentQuestion: 0,
-    isClicked: false,
-    questions: [],
-    counter: 30,
-    aux: true,
-    assertions: 0,
-  };
+  constructor() {
+    super();
+    this.state = {
+      currentQuestion: 0,
+      isClicked: false,
+      questions: [],
+      counter: 30,
+      aux: true,
+      assertions: 0,
+    };
+  }
 
   componentDidMount() {
     const { history, game } = this.props;
@@ -36,7 +38,12 @@ class Game extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+  }
+
   timeCounter = () => {
+    const ONE_SECOND = 1000;
     this.intervalID = setInterval(() => {
       this.setState((prevState) => ({ counter: prevState.counter - 1 }));
     }, ONE_SECOND);
@@ -104,9 +111,7 @@ class Game extends React.Component {
       counter: 30,
       aux: true,
       isClicked: false,
-      currentQuestion: prevState.currentQuestion < maxNum
-        ? prevState.currentQuestion + 1
-        : null,
+      currentQuestion: prevState.currentQuestion + 1,
     }));
     this.timeCounter();
   };
