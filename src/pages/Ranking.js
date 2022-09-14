@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import star from '../assets/star.png';
+import logo from '../assets/login_logo.png';
 
 class Ranking extends React.Component {
   state = {
@@ -20,12 +22,14 @@ class Ranking extends React.Component {
 
   render() {
     const { results } = this.state;
-    return (
-      <div>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <ul>
+        return (
+      <>
+        <img src={ logo } className="ranking-logo" alt="logo" />
+        <div className="ranking-container">
+          <h1 data-testid="ranking-title">Ranking</h1>
           {results.map((player, index) => (
-            <li key={ index }>
+            <div key={ index } className="ranking-item">
+
               <img
                 src={ `https://www.gravatar.com/avatar/${md5(player.gravatarEmail).toString()}` }
                 alt={ player.gravatarEmail }
@@ -34,20 +38,25 @@ class Ranking extends React.Component {
               <p data-testid={ `player-name-${index}` }>
                 {player.name}
               </p>
-              <p data-testid={ `player-score-${index}` }>
-                {player.score}
-              </p>
-            </li>
+              <div className="ranking-points">
+                <img src={ star } alt="logo" />
+                <p data-testid={ `player-score-${index}` }>
+                  {`${player.score} pontos`}
+                </p>
+              </div>
+
+            </div>
           ))}
-        </ul>
-        <button
-          type="button"
-          data-testid="btn-go-home"
-          onClick={ this.homePage }
-        >
-          Go back to homepage
-        </button>
-      </div>
+          <button
+            type="button"
+            data-testid="btn-go-home"
+            onClick={ this.homePage }
+          >
+            JOGAR NOVAMENTE
+          </button>
+        </div>
+
+      </>
     );
   }
 }
