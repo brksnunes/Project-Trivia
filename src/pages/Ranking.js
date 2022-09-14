@@ -23,21 +23,23 @@ class Ranking extends React.Component {
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
-        {results.map((player, index) => (
-          <tr key={ index }>
-            <img
-              src={ `https://www.gravatar.com/avatar/${md5(player.gravatarEmail).toString()}` }
-              alt={ player.gravatarEmail }
-              data-testid="header-profile-picture"
-            />
-            <td data-testid={ `player-name-${index}` }>
-              {player.name}
-            </td>
-            <td data-testid={ `player-score-${index}` }>
-              {player.score}
-            </td>
-          </tr>
-        ))}
+        <ul>
+          {results.map((player, index) => (
+            <li key={ index }>
+              <img
+                src={ `https://www.gravatar.com/avatar/${md5(player.gravatarEmail).toString()}` }
+                alt={ player.gravatarEmail }
+                data-testid="header-profile-picture"
+              />
+              <p data-testid={ `player-name-${index}` }>
+                {player.name}
+              </p>
+              <p data-testid={ `player-score-${index}` }>
+                {player.score}
+              </p>
+            </li>
+          ))}
+        </ul>
         <button
           type="button"
           data-testid="btn-go-home"

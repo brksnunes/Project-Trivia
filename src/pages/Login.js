@@ -12,7 +12,6 @@ class Login extends React.Component {
       name: '',
       email: '',
       btnDisabled: true,
-      token: '',
     };
   }
 
@@ -32,7 +31,6 @@ class Login extends React.Component {
     const user = { name, email };
     addUser(user);
     const token = await getToken();
-    this.setState({ token });
     localStorage.setItem('token', token);
     await fetchQuestions(token);
     history.push('/game');
@@ -44,8 +42,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const { name, email, btnDisabled, token } = this.state;
-    console.log(token);
+    const { name, email, btnDisabled } = this.state;
     return (
       <form>
         <img src={ logo } className="App-logo" alt="logo" />
