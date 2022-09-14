@@ -8,20 +8,22 @@ import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
 describe('Login page', () => {
   test('If Login page is rendered correctly', () => {
-    renderWithRouterAndRedux(<App />, { initialEntries: ['/'] });
-    const mainLogo = screen.getByRole('img');
-    expect(mainLogo).toHaveAttribute('alt', 'logo');
-    expect(mainLogo).toBeInTheDocument();
+    renderWithRouterAndRedux(<App />);
+    const mainLogo = screen.getAllByRole('img');
+    expect(mainLogo[0]).toHaveAttribute('alt', 'logo');
+    expect(mainLogo[0]).toBeInTheDocument();
+    expect(mainLogo[1]).toBeInTheDocument();
+    expect(mainLogo).toHaveLength(2);
   });
   test('If the login page has the correct inputs', () => {
-    renderWithRouterAndRedux(<App />, { initialEntries: ['/'] });
+    renderWithRouterAndRedux(<App />);
     const nameInput = screen.getByTestId('input-player-name');
     const emailInput = screen.getByTestId('input-gravatar-email');
     expect(nameInput).toBeInTheDocument();
     expect(emailInput).toBeInTheDocument();
   });
   test('If button "Entrar" is validated correctly', () => {
-    renderWithRouterAndRedux(<App />, { initialEntries: ['/'] });
+    renderWithRouterAndRedux(<App />);
     const NAME = 'xablau júnior';
     const EMAIL = 'xablau@bol.com';
 
@@ -52,16 +54,20 @@ describe('Login page', () => {
     expect(entrarButton).not.toBeDisabled();
   });
   test('If the route to "/settings" works as expected', () => {
-    const { history } = renderWithRouterAndRedux(<App />, { initialEntries: ['/'] });
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const settingsButton = screen.getByTestId('btn-settings');
 
     userEvent.click(settingsButton);
     expect(history.location.pathname).toBe('/settings');
+    const homeButton = screen.getByRole('button', { name: 'Início' });
+    expect(homeButton).toBeInTheDocument();
+    userEvent.click(homeButton);
+    expect(history.location.pathname).toBe('/');
   });
   test('If the route to "/game" works as expected', async () => {
     jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
-    const { history } = renderWithRouterAndRedux(<App />, { initialEntries: ['/'] });
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const NAME = 'xablau júnior';
     const EMAIL = 'xablau@bol.com';
@@ -78,7 +84,7 @@ describe('Login page', () => {
 
     // The waitFor method waits for a promise to be resolved before it makes a assertion.
     // REF: https://testing-library.com/docs/dom-testing-library/api-async
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+    await waitFor(() => expect(global.fetch).toHaveBeenCalled(), { timeout: 10000 });
     expect(history.location.pathname).toBe('/game');
     global.fetch.mockClear();
   });
