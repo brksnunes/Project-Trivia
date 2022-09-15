@@ -116,6 +116,12 @@ class Game extends React.Component {
     this.timeCounter();
   };
 
+  decodeEntity = (inputStr) => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
+  };
+
   render() {
     const { currentQuestion, isClicked, questions, counter } = this.state;
     let answersButtons;
@@ -137,8 +143,7 @@ class Game extends React.Component {
               key={ index }
               disabled={ isClicked }
             >
-              {answer}
-
+              { this.decodeEntity(answer) }
             </button>);
         } else {
           const key = questions[currentQuestion].incorrect_answers.indexOf(answer);
@@ -155,7 +160,7 @@ class Game extends React.Component {
               key={ index }
               disabled={ isClicked }
             >
-              {answer}
+              { this.decodeEntity(answer) }
             </button>
           );
         }
@@ -174,7 +179,7 @@ class Game extends React.Component {
                 </p>
               </div>
               <p data-testid="question-text">
-                {questions[currentQuestion].question}
+                { this.decodeEntity(questions[currentQuestion].question) }
               </p>
               <div className="timer-container">
                 <img src={ timer } alt="timer" />
